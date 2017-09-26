@@ -10,7 +10,7 @@ function ConvApp()
     img = imread('ovolaovo.jpg');
     img = double(img);
     
-    % aplicação da operação de convolução [QUESTÃO 1]
+    % aplicação da operação de convolução [QUESTÃO 1] [OK]
     % criação da matriz
 %     mat = [1, 0, -1; 0, 0, 0; -1, 0, 1];
 %     mat = double(mat);
@@ -19,7 +19,7 @@ function ConvApp()
 %     imshowpair(output, outconv, 'montage');
 %     disp(output);
 
-    % QUESTÃO 2A
+    % QUESTÃO 2A [OK]
 %     c = 1; d = 1;
 %     mat1 = [0, -c, 0; -c, (4*c)+d, -c; 0, -c, 0];
 %     mat2 = [-c, -c, -c; -c, (8*c)+d, -c; -c, -c, -c];
@@ -28,7 +28,7 @@ function ConvApp()
 %     outconv = cat(3, conv2(double(img(:,:,1)), double(mat2)), conv2(double(img(:,:,2)), double(mat2)), conv2(double(img(:,:,3)), double(mat2)));
 %     imshowpair(output2, outconv, 'montage');
     
-    % QUESTÃO 2B
+    % QUESTÃO 2B [OK]
 %     mat = [-1/8, -1/8, -1/8; -1/8, 1, -1/8; -1/8, -1/8, -1/8];
 %     mat = double(mat);
 %     mat2 = [-1, -1, -1; 0, 0, 0; 1, 1, 1];
@@ -44,7 +44,7 @@ function ConvApp()
 %     outconv = cat(3, conv2(double(img(:,:,1)), double(mat4)), conv2(double(img(:,:,2)), double(mat4)), conv2(double(img(:,:,3)), double(mat4)));
 %     imshowpair(output4, outconv, 'montage');
 
-    % QUESTÃO 2C
+%     % QUESTÃO 2C [OK]
 %     mat = [0,0,0; 0,1,0; 0,0,-1];
 %     mat = double(mat);
 %     mat2 = [0,0,-1; 0, 1, 0; 0,0,0];
@@ -58,6 +58,22 @@ function ConvApp()
 %     imshowpair(output3, outconv, 'montage');
 
     % QUESTÃO 2D
+%     mat = gaussian2d(5, 2.43);
+%     mat = double(mat);
+%     output = convolve(img, mat);
+%     outconv = cat(3, conv2(double(img(:,:,1)), double(mat)), conv2(double(img(:,:,2)), double(mat)), conv2(double(img(:,:,3)), double(mat)));
+%     output = uint8(output);
+%     outconv = uint8(outconv);
+%     imshowpair(output, outconv, 'montage');
+    
+    % QUESTÃO 2F
+%     mat = [1/9, 1/9, 1/9; 1/9, 1/9, 1/9; 1/9, 1/9, 1/9];
+%     mat = double(mat);
+%     output = convolve(img, mat);
+%     output = uint8(output);
+%     outconv = cat(3, conv2(double(img(:,:,1)), double(mat)), conv2(double(img(:,:,2)), double(mat)), conv2(double(img(:,:,3)), double(mat)));
+%     outconv = uint8(outconv);
+%     imshowpair(output, outconv, 'montage');
 end
 
 function out = convolve(image, convmatrix)
@@ -94,4 +110,12 @@ function out = convolve(image, convmatrix)
             end
         end
     end
+end
+
+%% gaussiano
+function f = gaussian2d(N,sigma)
+     % N is grid size, sigma speaks for itself
+     [x y]=meshgrid(round(-N/2):round(N/2), round(-N/2):round(N/2));
+     f=exp(-x.^2/(2*sigma^2)-y.^2/(2*sigma^2));
+     f=f./sum(f(:));
 end
