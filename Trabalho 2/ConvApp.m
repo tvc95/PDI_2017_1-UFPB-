@@ -7,7 +7,7 @@
 %% Função main do programa
 function ConvApp()
     % carregar imagem
-    img = imread('ovolaovo.jpg');
+    img = imread('gray.png');
 %    img = double(img);
     
     % aplicação da operação de convolução [QUESTÃO 1] [OK]
@@ -75,11 +75,11 @@ function ConvApp()
 %     outconv = uint8(outconv);
 %     imshowpair(output, outconv, 'montage');
 
-    % QUESTÃO 5a
-%        mat = [-1.0, -1.0, -1.0; -1.0, 8.0, -1.0; -1.0, -1.0, -1.0];
-%        output = convolve(double(img), mat);
-%        imshowpair(img ,rgb2gray(output), 'montage');
-%        disp(output2);
+    % QUESTÃO 5A
+%      mat = [-1.0, -1.0, -1.0; -1.0, 8.0, -1.0; -1.0, -1.0, -1.0];
+%      output = convolve(double(img), mat);
+%      imshowpair(img ,rgb2gray(output), 'montage');
+%      disp(output2);
 
     % QUESTÃO 5b
 %      smoothMat = double(gaussian2d(15, 2.43));
@@ -88,8 +88,19 @@ function ConvApp()
 %      output2 = convolve(double(output1), mat);
 %      imshowpair(img,rgb2gray(output2), 'montage');
 %      disp(output2);
-    
 
+% QUESTÃO 7 expansao
+% a = min(img(:));  
+% b = max(img(:));
+% img2 = (img-a).*(255/(b-a));
+% imshowpair(img,img2, 'montage');
+
+% QUESTÃO 7 equalizacao
+% min = 10;  
+% max = 150;
+% img2 = (img-min).*(255/(max-min));
+% imshowpair(img,img2, 'montage');
+    
 end
 
 function out = convolve(image, convmatrix)
