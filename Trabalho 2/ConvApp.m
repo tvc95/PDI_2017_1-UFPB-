@@ -75,7 +75,13 @@ function ConvApp()
 %     outconv = uint8(outconv);
 %     imshowpair(output, outconv, 'montage');
 
-    % QUESTÃO 5
+    % QUESTÃO 5a
+%       mat = [-1.0, -1.0, -1.0; -1.0, 8.0, -1.0; -1.0, -1.0, -1.0];
+%       output = convolve(double(img), mat);
+%       imshowpair(img ,output, 'montage');
+%       disp(output2);
+
+    % QUESTÃO 5b
 %      smoothMat = double(gaussian2d(15, 2.43));
 %      output1 = convolve(double(img), smoothMat);
 %      mat = [-1.0, -1.0, -1.0; -1.0, 8.0, -1.0; -1.0, -1.0, -1.0];
