@@ -7,8 +7,8 @@
 %% Função main do programa
 function ConvApp()
     % carregar imagem
-    img = imread('gray.png');
-%    img = double(img);
+    img = imread('ovolaovo.jpg');
+    img = double(img);
     
     % aplicação da operação de convolução [QUESTÃO 1] [OK]
     % criação da matriz
@@ -59,6 +59,17 @@ function ConvApp()
 
     % QUESTÃO 2D
 %     mat = gaussian2d(5, 2.43);
+%     disp(rank(mat));
+%     mat = double(mat);
+%     output = convolve(img, mat);
+%     outconv = cat(3, conv2(double(img(:,:,1)), double(mat)), conv2(double(img(:,:,2)), double(mat)), conv2(double(img(:,:,3)), double(mat)));
+%     output = uint8(output);
+%     outconv = uint8(outconv);
+%     imshowpair(output, outconv, 'montage');
+
+%     % QUESTÃO 2E
+%     mat = gaussDerivative(5, 1.43);
+%     disp(rank(mat));
 %     mat = double(mat);
 %     output = convolve(img, mat);
 %     outconv = cat(3, conv2(double(img(:,:,1)), double(mat)), conv2(double(img(:,:,2)), double(mat)), conv2(double(img(:,:,3)), double(mat)));
@@ -66,8 +77,9 @@ function ConvApp()
 %     outconv = uint8(outconv);
 %     imshowpair(output, outconv, 'montage');
     
-    % QUESTÃO 2F
+    % QUESTÃO 2F [OK]
 %     mat = [1/9, 1/9, 1/9; 1/9, 1/9, 1/9; 1/9, 1/9, 1/9];
+%     disp(rank(medfilt2(img(:,:,1))));
 %     mat = double(mat);
 %     output = convolve(img, mat);
 %     output = uint8(output);
@@ -85,22 +97,22 @@ function ConvApp()
 %      smoothMat = double(gaussian2d(15, 2.43));
 %      output1 = convolve(double(img), smoothMat);
 %      mat = [-1.0, -1.0, -1.0; -1.0, 8.0, -1.0; -1.0, -1.0, -1.0];
+%      disp(rank(mat));
 %      output2 = convolve(double(output1), mat);
-%      imshowpair(img,rgb2gray(output2), 'montage');
-%      disp(output2);
+%      imshowpair(uint8(img),rgb2gray(output2), 'montage');
+%      %disp(output2);
 
-% QUESTÃO 7 expansao
-% a = min(img(:));  
-% b = max(img(:));
-% img2 = (img-a).*(255/(b-a));
-% imshowpair(img,img2, 'montage');
+    % QUESTÃO 7 expansao
+%       a = min(img(:));  
+%       b = max(img(:));
+%       img2 = (img-a).*(255/(b-a));
+%       imshowpair(img,img2, 'montage');
 
-% QUESTÃO 7 equalizacao
-% min = 10;  
-% max = 150;
-% img2 = (img-min).*(255/(max-min));
-% imshowpair(img,img2, 'montage');
-    
+    % QUESTÃO 7 equalizacao
+%       min = 10;  
+%       max = 150;
+%       img2 = (img-min).*(255/(max-min));
+%       imshowpair(img,img2, 'montage');
 end
 
 function out = convolve(image, convmatrix)
@@ -141,8 +153,14 @@ end
 
 %% gaussiano
 function f = gaussian2d(N,sigma)
-     % N is grid size, sigma speaks for itself
      [x y]=meshgrid(round(-N/2):round(N/2), round(-N/2):round(N/2));
      f=exp(-x.^2/(2*sigma^2)-y.^2/(2*sigma^2));
+     f=f./sum(f(:));
+end
+
+%% derivada do gaussiano
+function f = gaussDerivative(N,sigma)
+     [x y]=meshgrid(round(-N/2):round(N/2), round(-N/2):round(N/2));
+     f=diff(exp(-x.^2/(2*sigma^2)-y.^2/(2*sigma^2)));
      f=f./sum(f(:));
 end
