@@ -7,8 +7,8 @@
 %% Função main do programa
 function ConvApp()
     % carregar imagem
-    img = imread('ovolaovo.jpg');
-    img = double(img);
+    img = imread('faustao.jpg');
+%     img = double(img);
     
     % aplicação da operação de convolução [QUESTÃO 1] [OK]
     % criação da matriz
@@ -109,10 +109,33 @@ function ConvApp()
 %       imshowpair(img,img2, 'montage');
 
     % QUESTÃO 7 equalizacao
-%       min = 10;  
-%       max = 150;
-%       img2 = (img-min).*(255/(max-min));
-%       imshowpair(img,img2, 'montage');
+%     I = img;
+%     [height,width, numberOfColorChannels]=size(I);
+%     if numberOfColorChannels > 1
+%       disp(numberOfColorChannels);
+%       I = rgb2gray(I);
+%     end
+% 
+%     % Num de ocorrencias de cada nivel de cinza
+%     NumPixel = compute_histogram(I);
+%     % probabilidade de ocorrencia de cada nivel de cinza
+%     ProbPixel = compute_normalized_histogram(NumPixel,I);
+%     % destribuicao comulativa de acordo com a probabilidade
+%     CumuPixel = compute_cumulative_histogram(ProbPixel);
+% 
+%     % Convertendo pra um novo mapa...
+%     Map = zeros(1,256);
+%     for i = 1:256
+%         Map(i) = uint8(255 * CumuPixel(i)+0.5);
+%     end
+%     for i = 1:height
+%         for j = 1:width
+%             I(i,j)=Map(I(i,j) + 1);
+%         end
+%     end
+%     
+%     imshowpair(rgb2gray(imread('faustao.jpg')),I, 'montage');
+    
 end
 
 function out = convolve(image, convmatrix)
@@ -163,4 +186,37 @@ function f = gaussDerivative(N,sigma)
      [x y]=meshgrid(round(-N/2):round(N/2), round(-N/2):round(N/2));
      f=diff(exp(-x.^2/(2*sigma^2)-y.^2/(2*sigma^2)));
      f=f./sum(f(:));
+end
+
+function f = compute_histogram(I)
+[height,width]=size(I);
+NumPixel = zeros(1,256);
+for i = 1:height
+    for j = 1:width
+        NumPixel( I(i,j) + 1 ) = NumPixel( I(i,j) + 1 ) + 1;
+    end
+end
+f = NumPixel;
+end
+
+function f = compute_normalized_histogram(NumPixel,I)
+[height,width]=size(I);
+ProbPixel = zeros(1,256);
+for i = 1:256
+    ProbPixel(i) = NumPixel(i) / (height * width * 1.0);
+end
+f = ProbPixel;
+end
+
+function f = compute_cumulative_histogram(ProbPixel)
+CumuPixel = zeros(1,256);
+for i = 1:256
+    if i == 1
+        CumuPixel(i) = ProbPixel(i);
+    else
+        CumuPixel(i) = CumuPixel(i-1) + ProbPixel(i);
+    end
+end
+
+f = CumuPixel;
 end
